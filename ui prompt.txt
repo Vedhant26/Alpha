@@ -1,0 +1,317 @@
+Here's your sky-themed UI prompt — drop this into your AI agent:
+
+🌤️ SKY THEME UI/UX REDESIGN PROMPT
+Context: My Kanban app has a fully working backend — WebSockets, AI, GitHub scraper, all functional. I need you to only redesign the frontend visual layer completely. Do not touch any backend logic, API calls, WebSocket handlers, or data flow. Only the UI/UX changes.
+
+THE VISION
+The app must feel like you're managing your projects from above the clouds — like looking out of a plane window. Light, airy, premium. Think Apple Vision Pro meets iOS 18 meets a sky photography app. Not dark mode. Not corporate blue. Sky blue. Cloud white. Morning light.
+Every interaction must feel like it has weight and air — things float in, settle softly, respond like bubbles. The whole experience should feel like touching water.
+
+STEP 0 — DESIGN TOKENS (BUILD FIRST, NOTHING ELSE UNTIL DONE)
+/* Sky Palette */
+Sky Deep:         #1a6fb5   (top of sky, darkest blue)
+Sky Mid:          #4aa8e8   (mid atmosphere)
+Sky Light:        #87ceeb   (horizon blue)
+Sky Pale:         #c9e8f7   (near-cloud zone)
+Cloud White:      #f0f8ff   (brightest clouds)
+Cloud Soft:       #e8f4fd   (soft cloud surface)
+Fog:              #ffffff60 (translucent fog layer)
+
+/* Glass / Bubble UI */
+Glass BG:         rgba(255, 255, 255, 0.15)
+Glass BG Hover:   rgba(255, 255, 255, 0.25)
+Glass Border:     rgba(255, 255, 255, 0.35)
+Glass Border H:   rgba(255, 255, 255, 0.60)
+Glass Shadow:     0 8px 32px rgba(31, 120, 200, 0.18)
+Glass Blur:       backdrop-filter: blur(18px) saturate(1.8)
+
+/* Text */
+Text Primary:     #0d3b6e   (deep sky navy)
+Text Secondary:   #2e6da4
+Text Muted:       #6fa8d0
+Text On Glass:    #1a4f7a
+
+/* Accent */
+Accent:           #2196F3   (clear sky blue)
+Accent Light:     #64B5F6
+Accent Glow:      rgba(33, 150, 243, 0.30)
+Success:          #4CAF50
+Warning:          #FFB74D
+Danger:           #EF5350
+
+/* Motion */
+Easing Spring:    cubic-bezier(0.34, 1.56, 0.64, 1)   ← bouncy, iPhone-like
+Easing Smooth:    cubic-bezier(0.16, 1, 0.3, 1)        ← silky, for panels
+Easing Gentle:    cubic-bezier(0.25, 0.46, 0.45, 0.94) ← for bg parallax
+Duration Fast:    120ms
+Duration Mid:     300ms
+Duration Slow:    600ms
+Duration Drift:   8000ms  ← cloud movement
+
+STEP 1 — LIVING SKY BACKGROUND (THE MOST IMPORTANT ELEMENT)
+This background must be present on every single page of the app — it never disappears, it's the canvas everything sits on.
+Structure (layered, back to front):
+Layer 1 — Sky Gradient (static):
+cssbackground: linear-gradient(
+  180deg,
+  #1a6fb5 0%,      /* deep blue top */
+  #4aa8e8 35%,     /* mid sky */
+  #87ceeb 60%,     /* light blue */
+  #c9e8f7 78%,     /* pale near horizon */
+  #e8f4fd 90%,     /* soft cloud zone */
+  #f0f8ff 100%     /* cloud white bottom */
+);
+Layer 2 — Sun Glow (top-left, static):
+css/* A radial gradient pseudo-element, top-left corner */
+background: radial-gradient(ellipse 600px 400px at 15% 8%,
+  rgba(255,255,255,0.55) 0%,
+  rgba(135,206,235,0.20) 45%,
+  transparent 70%
+);
+Layer 3 — Moving Cloud Bank (CSS animation, bottom 35% of screen):
+Create 3 <div> cloud layers with different speeds and opacities:
+css/* Cloud layer implementation */
+.cloud-layer {
+  position: fixed;
+  bottom: 0;
+  left: -100%;
+  width: 300%;  /* extra wide to loop seamlessly */
+  height: 45%;
+  background: url('clouds-svg.svg') repeat-x bottom;
+  pointer-events: none;
+}
+
+.cloud-layer-1 {
+  /* Dense foreground clouds, fully white */
+  opacity: 1.0;
+  animation: cloudDrift 80s linear infinite;
+  background-size: 900px auto;
+}
+
+.cloud-layer-2 {
+  /* Mid clouds, slightly transparent */
+  opacity: 0.75;
+  animation: cloudDrift 120s linear infinite reverse;
+  background-size: 1200px auto;
+  bottom: -20px;
+}
+
+.cloud-layer-3 {
+  /* Wispy background clouds */
+  opacity: 0.45;
+  animation: cloudDrift 160s linear infinite;
+  background-size: 1600px auto;
+  filter: blur(3px);
+}
+
+@keyframes cloudDrift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(33.33%); } /* shift by 1/3 width for seamless loop */
+}
+Generate the cloud SVG inline — large fluffy cumulus shapes using SVG <ellipse> and <circle> clusters, pure white with slight blur. Stack 6-8 different cloud formations across the width.
+Layer 4 — Fog gradient overlay (bottom, static):
+css/* Fades the very bottom into white mist */
+background: linear-gradient(
+  to top,
+  rgba(240, 248, 255, 0.85) 0%,
+  rgba(240, 248, 255, 0.40) 15%,
+  transparent 35%
+);
+Layer 5 — Atmospheric shimmer (very subtle):
+css/* Occasional light ray, top-left, 0.03 opacity, slow pulse */
+animation: shimmer 12s ease-in-out infinite alternate;
+@keyframes shimmer {
+  from { opacity: 0.02; transform: rotate(-5deg) scaleX(0.9); }
+  to   { opacity: 0.06; transform: rotate(-5deg) scaleX(1.1); }
+}
+
+STEP 2 — LOADING / SPLASH SCREEN
+Full screen, sky background visible behind everything.
+Sequence:
+
+App opens → sky background already visible and clouds already drifting
+Center of screen: a frosted glass circle (120px diameter, Glass BG, Glass Blur, white border) fades in (0 → 1, 400ms)
+Inside the circle: the app logo/icon — a simple white cloud with a subtle glow, drawn in SVG
+Below the circle: app name fades in 200ms later — "Meridian" (or your chosen name) in 32px, weight 700, Text Primary, letter-spacing -1px
+Below name: tagline in Text Muted 15px: "Your projects, above the noise."
+A thin, rounded progress bar appears below — Glass BG track, Accent fill, Radius XL, animates from 0% to 100% over 1.8 seconds
+When complete: everything scales up slightly (1 → 1.04) and fades out (400ms), then the main board rises up from below (translateY(40px) → 0, opacity 0 → 1, 500ms Easing Spring)
+
+
+STEP 3 — NAVIGATION BAR
+Height: 56px
+Position: fixed top, full width
+Background: rgba(255, 255, 255, 0.18)
+Backdrop-filter: blur(24px) saturate(2)
+Border-bottom: 1px solid rgba(255, 255, 255, 0.40)
+Box-shadow: 0 1px 0 rgba(31, 120, 200, 0.08), 0 4px 24px rgba(31, 120, 200, 0.06)
+
+Logo left: Cloud SVG icon (18px) + app name, Text Primary weight 700. A tiny live green pulse dot next to it when WebSocket is connected
+Nav links center: Board · Team · Digest in Text Secondary. On hover: color → Accent, a soft blue Glass BG pill slides under the text (border-radius: 20px, no hard edges). Active link: pill is permanently visible with slightly more opacity
+Right: Connection status as a frosted pill (not raw text). "Import" as a ghost glass button. "Add Task" as a solid glass button — Accent background at 90% opacity, white text, Radius XL (fully rounded), with a white inner highlight at the top (linear-gradient white to transparent, 30% opacity, top 50%) to give it the bubble/iOS button feel
+All nav elements: transition: all Duration-Fast Easing-Smooth
+
+
+STEP 4 — GLASS / BUBBLE COMPONENT SYSTEM
+Every card, panel, button, and modal in the app must use this system. Define it as reusable CSS classes:
+.glass-card — the base container:
+cssbackground: rgba(255, 255, 255, 0.18);
+backdrop-filter: blur(18px) saturate(1.8);
+-webkit-backdrop-filter: blur(18px) saturate(1.8);
+border: 1px solid rgba(255, 255, 255, 0.40);
+border-radius: 16px;
+box-shadow:
+  0 4px 24px rgba(31, 120, 200, 0.10),
+  inset 0 1px 0 rgba(255, 255, 255, 0.60);  /* ← the iOS highlight trick */
+.glass-card:hover:
+cssbackground: rgba(255, 255, 255, 0.28);
+border-color: rgba(255, 255, 255, 0.65);
+box-shadow:
+  0 8px 32px rgba(31, 120, 200, 0.18),
+  inset 0 1px 0 rgba(255, 255, 255, 0.70);
+transform: translateY(-2px);
+transition: all Duration-Mid Easing-Spring;
+.glass-button — for all secondary buttons:
+cssbackground: rgba(255, 255, 255, 0.22);
+border: 1px solid rgba(255, 255, 255, 0.50);
+border-radius: 999px;  /* fully pill shaped */
+padding: 8px 20px;
+color: Text-Primary;
+backdrop-filter: blur(12px);
+box-shadow: inset 0 1px 0 rgba(255,255,255,0.60), 0 2px 8px rgba(31,120,200,0.12);
+.glass-button:active:
+csstransform: scale(0.96);
+background: rgba(255, 255, 255, 0.35);
+transition: transform 80ms Easing-Spring;
+.accent-button — primary CTAs (Add Task etc.):
+cssbackground: linear-gradient(180deg, rgba(100,181,246,0.95) 0%, rgba(33,150,243,0.95) 100%);
+border: 1px solid rgba(255,255,255,0.40);
+border-radius: 999px;
+color: white;
+font-weight: 600;
+box-shadow:
+  inset 0 1px 0 rgba(255,255,255,0.45),   /* top highlight */
+  0 4px 16px rgba(33,150,243,0.40);        /* blue glow */
+On mousedown (all buttons): scale(0.96), Duration-Fast — feels like pressing a physical key.
+
+STEP 5 — BOARD VIEW
+The board sits on the sky background. No solid page background. Columns float.
+Column headers: not boxed — just the title + count pill floating above the cards. The count pill is a glass-card mini pill.
+Column top accent: a 2px line at top of the card stack area, color per status:
+
+Backlog: rgba(110,142,175,0.6)
+To Do: rgba(100,181,246,0.8)
+In Progress: rgba(255,183,77,0.8)
+Review: rgba(149,117,205,0.8)
+Done: rgba(76,175,80,0.8)
+
+Kanban cards: use .glass-card. Inside:
+
+Title: Text Primary 14px weight 500
+Bottom row: assignee avatar bubble (frosted glass circle, initials, colored), label chips (glass pill style), complexity badge
+On drag: card gets rotate(2deg), shadow deepens to 0 16px 48px rgba(31,120,200,0.25), slight scale up to 1.03. Feels like lifting a floating tile off water
+Drop zones: a dashed rounded rectangle with rgba(33,150,243,0.25) fill and Accent dashed border, a small cloud icon + "Drop here" label centered
+
+New task ghost card: a dashed-border glass card at column bottom. On hover, it breathes (subtle scale(1.01) pulse). Click → transforms into an inline glass input with a soft appearance animation.
+
+STEP 6 — 3D PARALLAX SCROLLING
+Implement on the board view and all scrollable views:
+javascript// On mousemove over the board
+document.addEventListener('mousemove', (e) => {
+  const x = (e.clientX / window.innerWidth - 0.5)  // -0.5 to 0.5
+  const y = (e.clientY / window.innerHeight - 0.5)
+
+  // Cloud layers shift slightly opposite to mouse
+  cloudLayer1.style.transform = `translateX(${x * -12}px) translateY(${y * -6}px)`
+  cloudLayer2.style.transform = `translateX(${x * -20}px) translateY(${y * -10}px)`
+  cloudLayer3.style.transform = `translateX(${x * -8}px) translateY(${y * -4}px)`
+
+  // Cards tilt very slightly toward mouse (3D feel)
+  // Apply to hovered card only
+  hoveredCard.style.transform = `
+    perspective(1000px)
+    rotateX(${y * -4}deg)
+    rotateY(${x * 4}deg)
+    translateZ(8px)
+  `
+})
+Parallax must use Easing-Gentle with Duration-Slow so it lags slightly behind the mouse — that lag IS the 3D depth illusion. Never snap instantly.
+
+STEP 7 — MODALS & PANELS (iPhone-style open/close)
+Opening animation (all modals):
+css/* Start state */
+transform: scale(0.92) translateY(16px);
+opacity: 0;
+
+/* End state — Duration-Mid, Easing-Spring */
+transform: scale(1) translateY(0);
+opacity: 1;
+Closing animation:
+csstransform: scale(0.95) translateY(8px);
+opacity: 0;
+/* Duration-Fast, Easing-Smooth */
+Modal backdrop: rgba(31, 120, 200, 0.12) with blur(8px) — blue-tinted, not black. Feels like frosted sky.
+Card detail modal: .glass-card with higher opacity (rgba(255,255,255,0.65)), Radius: 24px, max-width 680px. Title is editable inline — click to edit, no separate button. A thin sky-blue underline appears when in edit mode.
+AI Insights panel: slides in from right (translateX(100%) → 0), Easing-Spring, Duration-Slow. Same glass treatment. Width 380px. Left border: 1px solid rgba(255,255,255,0.40).
+
+STEP 8 — TEAM VIEW
+Responsive CSS grid, cards use .glass-card:
+
+48px avatar: frosted glass circle, colored initials, inset 0 1px 0 rgba(255,255,255,0.5) highlight
+Completion arc: SVG arc, Accent stroke, animates from 0 on mount with Easing-Spring — it overshoots slightly then settles (the spring easing handles this)
+WIP cards shown as tiny floating glass chips in a row
+On card hover: the whole card lifts (translateY(-4px)), shadow deepens, border brightens
+
+
+STEP 9 — DIGEST VIEW
+Max-width 860px, centered, floating on the sky:
+
+Stat cards: .glass-card in a 3-column grid, numbers count up from 0 on mount (800ms, ease-out)
+Bottleneck callout: amber-left-border glass card, rgba(255,183,77,0.15) background, Radius-LG
+Distribution bar: fully rounded pill bar, segments animate width from 0, each segment is a glass gradient
+Velocity sparkline: SVG, Accent stroke, gradient fill from rgba(33,150,243,0.3) to transparent
+
+
+STEP 10 — TOAST NOTIFICATIONS
+Bottom-left, stack upward:
+Background: rgba(255,255,255,0.75)
+Backdrop-filter: blur(20px)
+Border: 1px solid rgba(255,255,255,0.60)
+Border-radius: 14px
+Box-shadow: 0 8px 32px rgba(31,120,200,0.18)
+Slide in: translateX(-120%) → 0, Easing-Spring, Duration-Mid
+
+A thin colored bar at the bottom shrinks left to right as the auto-dismiss timer counts down.
+
+On hover: timer pauses, toast brightens slightly.
+
+STEP 11 — SKELETON SCREENS
+No spinners anywhere. Skeleton shimmer uses sky tones:
+cssbackground: linear-gradient(
+  90deg,
+  rgba(255,255,255,0.15) 25%,
+  rgba(255,255,255,0.35) 50%,
+  rgba(255,255,255,0.15) 75%
+);
+background-size: 200% 100%;
+animation: shimmer 1.8s ease-in-out infinite;
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+HARD RULES — DO NOT VIOLATE
+
+❌ No dark backgrounds, no #000, no #111, no grey #f5f5f5
+❌ No solid opaque buttons — every button must have glass or gradient treatment
+❌ No border-radius below 10px anywhere in the app
+❌ No transition: all 0.3s ease — always specify property + use defined tokens
+❌ No spinners — skeletons only
+❌ No flat shadows — all shadows must have the blue-sky tint (rgba(31,120,200,...))
+❌ No raw "Disconnected" text — always a frosted glass status pill with a colored dot
+❌ Clouds must always be moving — if animation is paused for any reason, it must auto-resume
+✅ Every interactive element must respond to mousedown within 80ms — no laggy buttons
+✅ The sky background must be visible at all times, on all views, never covered by a solid element
+
+
+The feeling when someone opens this app: like opening an app on an iPhone for the first time and going "wait, this is really nice" — light, airy, confident, smooth. Every animation settles. Nothing snaps. Nothing is harsh. It floats.

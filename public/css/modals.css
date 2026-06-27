@@ -1,0 +1,445 @@
+/* ============================================
+   ALPHA — MODALS & PANELS
+   iPhone-style open/close animations.
+   ============================================ */
+
+/* ── Modal Backdrop ── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal-backdrop);
+  background: rgba(0, 20, 60, 0.18);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms ease;
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Modal Container ── */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: var(--z-modal);
+  max-width: 680px;
+  width: 92%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: var(--space-xl);
+  transform: translate(-50%, -50%) scale(0.92) translateY(16px);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--duration-mid) var(--ease-spring),
+    opacity var(--duration-mid) var(--ease-spring);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--glass-rgb), 0.25) transparent;
+}
+
+.modal::-webkit-scrollbar {
+  width: 4px;
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background: rgba(var(--glass-rgb), 0.30);
+  border-radius: var(--radius-pill);
+}
+
+.modal.active {
+  transform: translate(-50%, -50%) scale(1) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal.closing {
+  transform: translate(-50%, -50%) scale(0.95) translateY(8px);
+  opacity: 0;
+  transition:
+    transform var(--duration-fast) var(--ease-smooth),
+    opacity var(--duration-fast) var(--ease-smooth);
+}
+
+/* ── Modal Header ── */
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(var(--glass-rgb), 0.15);
+  border: 1px solid rgba(var(--glass-rgb), 0.30);
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background var(--duration-fast) var(--ease-smooth),
+    color var(--duration-fast) var(--ease-smooth),
+    transform var(--duration-fast) var(--ease-spring);
+}
+
+.modal-close:hover {
+  background: rgba(var(--glass-rgb), 0.25);
+  color: var(--text-primary);
+}
+
+.modal-close:active {
+  transform: scale(0.92);
+}
+
+/* ── Inline Editable Title ── */
+.editable-title {
+  font-size: var(--font-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 2px 0;
+  width: 100%;
+  outline: none;
+  font-family: var(--font-family);
+  transition: border-color var(--duration-fast) var(--ease-smooth);
+}
+
+.editable-title:focus {
+  border-bottom-color: var(--accent-light);
+}
+
+.editable-title::placeholder {
+  color: var(--text-muted);
+}
+
+/* ── Card Detail Modal Sections ── */
+.card-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: var(--space-lg);
+}
+
+.card-detail-main {
+  min-width: 0;
+}
+
+.card-detail-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.card-detail-section {
+  margin-bottom: var(--space-lg);
+}
+
+.card-detail-label {
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-sm);
+}
+
+.card-detail-description {
+  color: var(--text-on-glass);
+  font-size: var(--font-base);
+  line-height: 1.6;
+}
+
+/* ── Sidebar Items ── */
+.sidebar-item {
+  padding: var(--space-sm) 0;
+}
+
+.sidebar-item-label {
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.sidebar-item-value {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-sm);
+  color: var(--text-primary);
+}
+
+/* ── Comment Thread ── */
+.comment-thread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.comment-item {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.comment-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.comment-author {
+  font-size: var(--font-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.comment-time {
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+  margin-left: var(--space-sm);
+}
+
+.comment-text {
+  font-size: var(--font-sm);
+  color: var(--text-on-glass);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+.comment-input-row {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-start;
+  margin-top: var(--space-md);
+}
+
+.comment-input-row .glass-input {
+  flex: 1;
+}
+
+/* ── Activity History ── */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+}
+
+.activity-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.activity-time {
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ── AI Insights Panel (slides from right) ── */
+.ai-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  max-width: 90vw;
+  z-index: var(--z-panel);
+  padding: calc(var(--nav-height) + var(--space-md)) var(--space-lg) var(--space-lg);
+  overflow-y: auto;
+  background: rgba(var(--glass-rgb), 0.22);
+  backdrop-filter: var(--glass-blur-heavy);
+  -webkit-backdrop-filter: var(--glass-blur-heavy);
+  border-left: 1px solid rgba(var(--glass-rgb), 0.40);
+  box-shadow: -8px 0 32px rgba(31, 120, 200, 0.10);
+  transform: translateX(100%);
+  pointer-events: none;
+  transition:
+    transform var(--duration-slow) var(--ease-spring),
+    opacity var(--duration-slow) var(--ease-spring);
+  opacity: 0;
+}
+
+.ai-panel.active {
+  transform: translateX(0);
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.ai-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.ai-panel-title {
+  font-size: var(--font-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* ── AI Chat Theme ── */
+#aiInsightsList {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 24px;
+}
+
+.ai-chat-message {
+  display: flex;
+  gap: 12px;
+  margin-bottom: var(--space-lg);
+  animation: insightAppear var(--duration-mid) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-chat-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #60b4f7, #2196F3);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.ai-chat-bubble {
+  flex: 1;
+  padding: 16px;
+  border-radius: 16px;
+  border-top-left-radius: 4px;
+  background: rgba(33, 150, 243, 0.08);
+  border: 1px solid rgba(33, 150, 243, 0.2);
+}
+
+.ai-chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.ai-chat-time {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+}
+
+.ai-chat-text {
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.5;
+}
+
+.ai-chat-recommendation {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  border-left: 3px solid var(--accent);
+}
+
+@keyframes insightAppear {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── GitHub Import Modal ── */
+.github-import-preview {
+  max-height: 300px;
+  overflow-y: auto;
+  margin: var(--space-md) 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--glass-rgb), 0.25) transparent;
+}
+
+.github-issue-preview {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid rgba(var(--glass-rgb), 0.15);
+}
+
+.github-issue-preview:last-child {
+  border-bottom: none;
+}
+
+.github-issue-number {
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+  font-weight: var(--font-weight-semibold);
+}
+
+.github-issue-title {
+  font-size: var(--font-sm);
+  color: var(--text-primary);
+  flex: 1;
+}
+
+/* ── Create Board Modal ── */
+.board-form-group {
+  margin-bottom: var(--space-md);
+}
+
+.board-form-label {
+  display: block;
+  font-size: var(--font-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .card-detail-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ai-panel {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .modal {
+    width: 96%;
+    max-height: 90vh;
+    padding: var(--space-lg);
+  }
+}

@@ -1,0 +1,101 @@
+/* ============================================
+   ALPHA — LIVING SKY BACKGROUND
+   Real photographic clouds over a true sky.
+   ============================================ */
+
+/* ── Layer 1: True Sky Gradient ── */
+.sky-background {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-sky);
+  background: linear-gradient(
+    180deg,
+    var(--sky-deep) 0%,
+    var(--sky-mid) 25%,
+    var(--sky-light) 60%,
+    var(--sky-pale) 100%
+  );
+  pointer-events: none;
+  transition: background 500ms ease;
+}
+
+/* ── Layer 2: Sun glow (warm light, top-left) ── */
+.sky-background::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 700px 500px at 12% 5%,
+    rgba(255, 248, 220, 0.50) 0%,
+    rgba(255, 236, 179, 0.20) 30%,
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+/* ── Layer 3: Atmospheric haze (subtle depth) ── */
+.sky-background::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 120% 60% at 50% 100%,
+    rgba(var(--glass-rgb), 0.30) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+/* ── Cloud Canvas Container ── */
+.cloud-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-clouds);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ── Cloud Layers: Real photographic clouds via CSS ── */
+.cloud-layer {
+  position: absolute;
+  width: 200%;
+  pointer-events: none;
+  will-change: transform;
+  background-repeat: repeat-x;
+  background-size: cover;
+  background-position: bottom;
+  mask-image: linear-gradient(to top, white 20%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, white 20%, transparent 100%);
+}
+
+/* Single clear cloud layer for the photograph */
+.cloud-layer-1 {
+  bottom: 0%;
+  height: 50%;
+  opacity: 0.85;
+  background-image: url("/images/cloud.png");
+  animation: cloudDrift 120s linear infinite;
+  z-index: 3;
+}
+
+@keyframes cloudDrift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Layer 4: Fog / Atmospheric Depth Overlay ── */
+.fog-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  background: linear-gradient(
+    to top,
+    rgba(240, 247, 254, 0.70) 0%,
+    rgba(240, 247, 254, 0.25) 30%,
+    transparent 60%
+  );
+  z-index: 2;
+  pointer-events: none;
+}

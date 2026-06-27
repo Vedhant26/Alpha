@@ -1,0 +1,147 @@
+/* ============================================
+   ALPHA — SKY THEME DESIGN TOKENS
+   Build this first. Nothing else until done.
+   ============================================ */
+
+:root {
+  /* ── Sky Palette ── */
+  --sky-deep: #1a6fb5;
+  --sky-mid: #4aa8e8;
+  --sky-light: #87ceeb;
+  --sky-pale: #c9e8f7;
+  --cloud-white: #f0f8ff;
+  --cloud-soft: #e8f4fd;
+  --fog: rgba(var(--glass-rgb), 0.38);
+
+  /* ── Glass / Bubble UI ── */
+  --glass-rgb: 255, 255, 255;
+  --glass-bg: rgba(var(--glass-rgb), 0.25);
+  --glass-bg-hover: rgba(var(--glass-rgb), 0.45);
+  --glass-bg-active: rgba(var(--glass-rgb), 0.55);
+  --glass-border: rgba(var(--glass-rgb), 0.50);
+  --glass-border-hover: rgba(var(--glass-rgb), 0.85);
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --glass-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --glass-shadow-drag: 0 16px 48px rgba(0, 0, 0, 0.20);
+  --glass-highlight: inset 0 1px 0 rgba(var(--glass-rgb), 0.80);
+  --glass-highlight-hover: inset 0 1px 0 rgba(var(--glass-rgb), 1);
+  --glass-blur: blur(32px) saturate(200%);
+  --glass-blur-heavy: blur(48px) saturate(250%);
+  --glass-blur-light: blur(16px) saturate(150%);
+
+  /* ── Text ── */
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --text-muted: #cbd5e1;
+  --text-on-glass: #ffffff;
+  --text-white: #ffffff;
+
+  /* ── Accent ── */
+  --accent: #2196F3;
+  --accent-light: #64B5F6;
+  --accent-glow: rgba(33, 150, 243, 0.30);
+  --accent-glow-strong: rgba(33, 150, 243, 0.40);
+  --success: #4CAF50;
+  --warning: #FFB74D;
+  --danger: #EF5350;
+
+  /* ── Column Status Colors ── */
+  --col-backlog: rgba(110, 142, 175, 0.6);
+  --col-todo: rgba(100, 181, 246, 0.8);
+  --col-progress: rgba(255, 183, 77, 0.8);
+  --col-review: rgba(149, 117, 205, 0.8);
+  --col-done: rgba(76, 175, 80, 0.8);
+
+  /* ── Motion ── */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-gentle: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-mid: 250ms;
+  --duration-slow: 400ms;
+  --duration-drift: 8000ms;
+
+  /* ── Spacing & Radius ── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 9999px;
+  --radius-blob: 40% 60% 70% 30% / 40% 50% 60% 50%;
+}
+
+[data-theme="dark"] {
+  --sky-deep: #0a1128;
+  --sky-mid: #121b36;
+  --sky-light: #1c2847;
+  --sky-pale: #2a3b60;
+  --cloud-white: #0a0a0a;
+  --cloud-soft: #121212;
+  --fog: rgba(0, 0, 0, 0.38);
+
+  --glass-rgb: 20, 25, 40;
+  --glass-bg: rgba(var(--glass-rgb), 0.4);
+  --glass-bg-hover: rgba(30, 40, 60, 0.6);
+  --glass-bg-active: rgba(40, 55, 85, 0.7);
+  --glass-border: rgba(var(--glass-rgb), 0.1);
+  --glass-border-hover: rgba(var(--glass-rgb), 0.2);
+  
+  --text-primary: #e2e8f0;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-on-glass: #f1f5f9;
+}
+
+:root {
+  /* ── Spacing ── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* ── Radius ── */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-pill: 9999px;
+  --radius-blob: 40% 60% 70% 30% / 40% 50% 60% 50%;
+
+  /* ── Typography ── */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-xs: 12px;
+  --font-sm: 13px;
+  --font-base: 14px;
+  --font-md: 15px;
+  --font-lg: 18px;
+  --font-xl: 24px;
+  --font-2xl: 32px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ── Nav ── */
+  --nav-height: 64px;
+
+  /* ── Z-Index Layers ── */
+  --z-sky: 0;
+  --z-clouds: 1;
+  --z-content: 10;
+  --z-nav: 100;
+  --z-dropdown: 200;
+  --z-modal-backdrop: 500;
+  --z-modal: 510;
+  --z-panel: 400;
+  --z-toast: 600;
+  --z-splash: 1000;
+}

@@ -1,0 +1,241 @@
+/* ============================================
+   ALPHA — DIGEST VIEW
+   Weekly report: stats, bottleneck, velocity.
+   ============================================ */
+
+.digest-view {
+  padding: calc(var(--nav-height) + var(--space-xl)) var(--space-xl) var(--space-xl);
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.digest-header {
+  margin-bottom: var(--space-xl);
+}
+
+.digest-title {
+  font-size: var(--font-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.digest-period {
+  font-size: var(--font-sm);
+  color: var(--text-muted);
+}
+
+/* ── Stat Cards Grid ── */
+.digest-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.stat-card {
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+.stat-card-value {
+  font-size: 36px;
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: var(--space-xs);
+}
+
+.stat-card-label {
+  font-size: var(--font-sm);
+  color: var(--text-muted);
+  font-weight: var(--font-weight-medium);
+}
+
+.stat-card-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-semibold);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  margin-top: var(--space-sm);
+}
+
+.stat-card-trend--up {
+  color: var(--success);
+  background: rgba(76, 175, 80, 0.12);
+}
+
+.stat-card-trend--down {
+  color: var(--danger);
+  background: rgba(239, 83, 80, 0.12);
+}
+
+/* ── Bottleneck Callout ── */
+.bottleneck-callout {
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  border-left: 4px solid var(--warning);
+  background: rgba(255, 183, 77, 0.08);
+}
+
+.bottleneck-callout-title {
+  font-size: var(--font-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.bottleneck-callout-text {
+  font-size: var(--font-sm);
+  color: var(--text-on-glass);
+  line-height: 1.6;
+}
+
+/* ── Distribution Bar ── */
+.distribution-section {
+  margin-bottom: var(--space-xl);
+}
+
+.distribution-title {
+  font-size: var(--font-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.distribution-bar {
+  display: flex;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  background: rgba(var(--glass-rgb), 0.12);
+  border: 1px solid rgba(var(--glass-rgb), 0.25);
+}
+
+.distribution-segment {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-semibold);
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  transition: width 800ms var(--ease-spring);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.distribution-segment[data-status="backlog"] {
+  background: linear-gradient(90deg, rgba(110, 142, 175, 0.7), rgba(110, 142, 175, 0.9));
+}
+.distribution-segment[data-status="todo"] {
+  background: linear-gradient(90deg, rgba(100, 181, 246, 0.8), rgba(100, 181, 246, 1));
+}
+.distribution-segment[data-status="in-progress"] {
+  background: linear-gradient(90deg, rgba(255, 183, 77, 0.85), rgba(255, 183, 77, 1));
+}
+.distribution-segment[data-status="review"] {
+  background: linear-gradient(90deg, rgba(149, 117, 205, 0.85), rgba(149, 117, 205, 1));
+}
+.distribution-segment[data-status="done"] {
+  background: linear-gradient(90deg, rgba(76, 175, 80, 0.85), rgba(76, 175, 80, 1));
+}
+
+.distribution-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.distribution-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+}
+
+.distribution-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* ── Velocity Sparkline ── */
+.velocity-section {
+  margin-bottom: var(--space-xl);
+}
+
+.velocity-title {
+  font-size: var(--font-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.velocity-chart {
+  padding: var(--space-lg);
+  height: 180px;
+  position: relative;
+}
+
+.velocity-chart svg {
+  width: 100%;
+  height: 100%;
+}
+
+.velocity-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.velocity-area {
+  fill: url(#velocityGradient);
+  opacity: 0.4;
+}
+
+.velocity-dot {
+  fill: var(--accent);
+  stroke: white;
+  stroke-width: 2;
+}
+
+/* ── Empty Digest ── */
+.digest-empty {
+  text-align: center;
+  padding: var(--space-3xl);
+  color: var(--text-muted);
+}
+
+.digest-empty svg {
+  width: 64px;
+  height: 64px;
+  margin-bottom: var(--space-md);
+  opacity: 0.4;
+}
+
+.digest-empty-text {
+  font-size: var(--font-md);
+  margin-bottom: var(--space-md);
+}
+
+@media (max-width: 640px) {
+  .digest-view {
+    padding: calc(var(--nav-height) + var(--space-md)) var(--space-md) var(--space-md);
+  }
+  
+  .digest-stats {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,200 @@
+/* ============================================
+   ALPHA — TEAM VIEW
+   Responsive grid of glass team member cards.
+   ============================================ */
+
+.team-view {
+  padding: calc(var(--nav-height) + var(--space-xl)) var(--space-xl) var(--space-xl);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.team-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+}
+
+.team-view-title {
+  font-size: var(--font-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-lg);
+}
+
+/* ── Team Member Card ── */
+.team-card {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.team-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.team-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.team-card-name {
+  font-size: var(--font-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.team-card-role {
+  font-size: var(--font-sm);
+  color: var(--text-muted);
+}
+
+/* ── Completion Arc ── */
+.team-completion {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.completion-arc-container {
+  width: 64px;
+  height: 64px;
+  position: relative;
+}
+
+.completion-arc-container svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.completion-arc-bg {
+  fill: none;
+  stroke: rgba(var(--glass-rgb), 0.20);
+  stroke-width: 4;
+}
+
+.completion-arc-fill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s var(--ease-spring);
+}
+
+.completion-arc-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.completion-stats {
+  flex: 1;
+}
+
+.completion-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: var(--font-sm);
+}
+
+.completion-stat-label {
+  color: var(--text-muted);
+}
+
+.completion-stat-value {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+/* ── WIP Chips ── */
+.team-wip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.team-wip-label {
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+.wip-chip {
+  padding: 4px 10px;
+  font-size: var(--font-xs);
+  color: var(--text-on-glass);
+  background: rgba(var(--glass-rgb), 0.15);
+  border: 1px solid rgba(var(--glass-rgb), 0.25);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+/* ── Label Specialisation ── */
+.team-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.team-labels-title {
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+/* ── Empty Team State ── */
+.team-empty {
+  text-align: center;
+  padding: var(--space-3xl);
+  color: var(--text-muted);
+}
+
+.team-empty svg {
+  width: 64px;
+  height: 64px;
+  margin-bottom: var(--space-md);
+  opacity: 0.4;
+}
+
+.team-empty-text {
+  font-size: var(--font-md);
+  margin-bottom: var(--space-md);
+}
+
+@media (max-width: 640px) {
+  .team-view {
+    padding: calc(var(--nav-height) + var(--space-md)) var(--space-md) var(--space-md);
+  }
+  
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
